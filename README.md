@@ -33,7 +33,10 @@ python -m http.server 8080
 
 - 各手机扫码或点开同一 GitHub Pages 链接即可
 - 「最近计算」存在**各自手机浏览器**的 localStorage，不会云端同步
-- 需要联网（Open-Meteo 预报、RainViewer 雷达）
+- 需要联网（Open-Meteo 预报、RainViewer 雷达、Blitzortung 闪电 WebSocket）
+- 雷达图可勾选「实时闪电」，并用「范围」选择：**附近 / 全球 / 全国 / 各省（市）**
+- 闪击⚡符号**不参与指数**；省界为大致矩形范围，非精确行政区划边界
+- 全球模式会限制图上闪击数量，减轻手机卡顿
 - 雷达底图优先 Esri；国内若慢可换网络后再试
 
 ## 与桌面 EXE 的关系

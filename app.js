@@ -20,6 +20,35 @@ let radarMarker = null;
 let radarFrames = [];
 let radarIndex = 0;
 let radarTimer = null;
+let lightning = null;
+
+function updateLightningStatus(state, extra) {
+  const el = $("lightning-status");
+  if (!el) return;
+  const n = extra && extra.nearby != null ? extra.nearby : null;
+  const scope = extra && extra.regionLabel ? ` · ${extra.regionLabel}` : "";
+  const nearTxt = n == null ? "" : ` · 图上${n}次`;
+  if (state === "off") el.textContent = "闪电：已关";
+  else if (state === "connecting") el.textContent = "闪电：连接中…" + scope;
+  else if (state === "err") el.textContent = "闪电：重连中…" + scope + nearTxt;
+  else if (state === "ok") {
+    const km = extra && extra.lastKm != null ? ` · 最近${extra.lastKm}km` : "";
+    el.textContent = "闪电：已连接" + scope + nearTxt + km;
+  } else el.textContent = "闪电：—";
+}
+
+function fillLightningRegions() {
+  const sel = $("lightning-region");
+  if (!sel || !window.QAILightning) return;
+  sel.innerHTML = "";
+  for (const r of QAILightning.REGIONS) {
+    const o = document.createElement("option");
+    o.value = r.id;
+    o.textContent = r.label;
+    if (r.id === "nearby") o.selected = true;
+    sel.appendChild(o);
+  }
+}
 
 function near(a, b) {
   return Math.abs(Number(a) - Number(b)) < 0.00015;
@@ -116,9 +145,26 @@ function ensureRadarMap(lat, lon) {
       fillColor: "#fff",
       fillOpacity: 1,
     }).addTo(radarMap);
+    lightning = QAILightning.create();
+    lightning.onStatus = updateLightningStatus;
+    lightning.attach(radarMap, lat, lon);
+    fillLightningRegions();
+    const box = $("lightning-on");
+    const regionSel = $("lightning-region");
+    if (regionSel) {
+      regionSel.onchange = () => {
+        if (lightning) lightning.setRegion(regionSel.value, { fit: true });
+      };
+      if (lightning) lightning.setRegion(regionSel.value, { fit: false });
+    }
+    if (box) {
+      box.onchange = () => lightning.setEnabled(box.checked);
+      lightning.setEnabled(box.checked);
+    }
   } else {
     radarMap.setView([lat, lon], radarMap.getZoom() || 9);
     if (radarMarker) radarMarker.setLatLng([lat, lon]);
+    if (lightning) lightning.setCenter(lat, lon);
   }
   if (radarMarker) {
     radarMarker.unbindTooltip();

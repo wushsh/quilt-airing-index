@@ -132,6 +132,77 @@ button {
   color: var(--ink);
   border: 1px solid var(--line);
 }
+.lightning-toggle {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  margin: 0;
+  padding: 0 8px;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.lightning-toggle input { margin: 0; }
+.lightning-scope {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.lightning-scope select {
+  height: 32px;
+  min-width: 132px;
+  max-width: 168px;
+  padding: 0 8px;
+  font-size: 13px;
+}
+#lightning-status { font-size: 12px; }
+.leaflet-div-icon.lightning-bolt {
+  background: transparent !important;
+  border: none !important;
+  pointer-events: none;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  height: auto !important;
+}
+.lightning-bolt__glyph {
+  display: block;
+  line-height: 1;
+  font-size: 26px;
+  color: #FFEA00;
+  text-shadow:
+    0 0 4px rgba(255, 193, 7, 0.95),
+    0 1px 0 #F57F17,
+    0 -1px 0 #F57F17,
+    1px 0 0 #F57F17,
+    -1px 0 0 #F57F17;
+  user-select: none;
+}
+.lightning-bolt--flash .lightning-bolt__glyph {
+  font-size: 32px;
+  animation: lightning-flash 0.45s ease-out;
+}
+.lightning-bolt--fade .lightning-bolt__glyph {
+  font-size: 20px;
+  opacity: 0.75;
+  text-shadow: 0 0 2px rgba(255, 193, 7, 0.55);
+}
+@keyframes lightning-flash {
+  0% { transform: scale(0.4); opacity: 0.2; }
+  35% { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
 .leaflet-container { font-family: inherit; background: #cfd8dc; }
 
 .board { margin-top: 4px; }
