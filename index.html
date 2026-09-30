@@ -9,7 +9,7 @@
   <title>晒被气象指数分析与推荐系统 V1.0</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="vendor/leaflet.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260330b">
 </head>
 <body>
   <header class="top">
@@ -71,8 +71,16 @@
         <button type="button" id="radar-play">播放</button>
         <button type="button" id="radar-next">下一帧</button>
         <span id="radar-time" class="muted">—</span>
+        <label class="lightning-toggle">
+          <input type="checkbox" id="lightning-on" checked>
+          实时闪电
+        </label>
+        <label class="lightning-scope">范围
+          <select id="lightning-region"></select>
+        </label>
+        <span id="lightning-status" class="muted">闪电：—</span>
       </div>
-      <p id="radar-note" class="muted">仅供判断当前是否有雨。图源 RainViewer。</p>
+      <p id="radar-note" class="muted">雷达仅供判断附近是否有雨；闪电可选附近/全球/全国/各省。⚡ 来自 Blitzortung 社区网，站点稀疏处会漏测，不作业务预警。</p>
     </article>
   </section>
 
@@ -155,13 +163,14 @@
   </section>
 
   <p id="error" class="error hidden"></p>
-  <footer>预报经 Open-Meteo 取 ECMWF IFS；雷达 RainViewer。指数在浏览器内计算，不上传账号。</footer>
+  <footer>预报经 Open-Meteo 取 ECMWF IFS；雷达 RainViewer；闪电 Blitzortung 社区网。指数在浏览器内计算，不上传账号。</footer>
 
   <script src="vendor/leaflet.js"></script>
   <script src="js/astro.js"></script>
   <script src="js/engine.js"></script>
   <script src="js/forecast.js"></script>
   <script src="js/radar.js"></script>
-  <script src="app.js"></script>
+  <script src="js/lightning.js?v=20260330b"></script>
+  <script src="app.js?v=20260330b"></script>
 </body>
 </html>
